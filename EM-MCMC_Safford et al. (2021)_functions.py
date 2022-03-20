@@ -18,7 +18,7 @@ def target_info(n1n2_xls_file_path):
     :return:
         1. A Pandas DataFrame. The processed wastewater data.
         2. A Pandas DataFrame. One-hot encoding of the sample name and target gene combo.
-        3. A Pandas Index. The sample name and target gene combo.
+        3. A Pandas Index. The sample name (i.e., sample identifier containing information on the zone and sampling date) and target gene combo.
         4. An integer. The number of sample names and target gene combo in the file.
     """
     n1n2_dt = pd.read_excel(n1n2_xls_file_path, skiprows=0)
@@ -69,10 +69,10 @@ def _process_n1n2_xls(n1n2_xls_file_path, censored_ct):
 
 class TwalkLatentModel:
     """
-    The workhorse when fitting the latent Bayesian model using the t-walk package. The model suppors the following
+    The workhorse when fitting the latent Bayesian model using the t-walk package. The model supports the following
     priors.
     sigma ~ Gamma(alpha, beta)
-    p_z ~ Beta(alpha, beta)
+    p_z [posterior distribution of the latent variable] ~ Beta(alpha, beta) 
     theta ~ TruncatedNormal(mean, sigma) or theta ~ Exp(1 / mean).
     """
 
